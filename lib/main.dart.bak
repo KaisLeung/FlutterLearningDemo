@@ -1,0 +1,112 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_app/dart/learning/dart_oop.dart';
+import 'package:flutter_app/flutter/widget/learning/flutter_layout_page.dart';
+import 'package:flutter_app/flutter/widget/learning/getsture_page.dart';
+import 'package:flutter_app/flutter/widget/learning/less_group_page.dart';
+import 'package:flutter_app/flutter/widget/learning/stateful_group_page.dart';
+
+import 'flutter/widget/learning/flutter_widget_lifecycle.dart';
+import 'flutter/widget/learning/pub_learning.dart';
+
+void main() => runApp(DynamicTheme());
+
+class DynamicTheme extends StatefulWidget {
+  @override
+  _DynamicThemeState createState() => _DynamicThemeState();
+}
+
+class _DynamicThemeState extends State<DynamicTheme> {
+  Brightness _brightness = Brightness.light;
+  ///字体下载地址：https://fonts.google.com/specimen/Rubik+Mono+One?selection.family=Rubik+Mono+One
+  ///更多参考：https://flutter.dev/docs/cookbook/design/fonts
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+        title: 'Flutter Demo',
+        theme: ThemeData(
+//          fontFamily: 'RubikMonoOne',//将该字体应用到全局
+          brightness:_brightness,
+          primarySwatch: Colors.blue,
+        ),
+        home: Scaffold(
+          appBar: AppBar(
+            title: Text('如何创建和使用Flutter的路由与导航？'),
+          ),
+          body: Column(
+            children: <Widget>[
+              RaisedButton(
+                onPressed: () {
+                  setState(() {
+                    if (_brightness == Brightness.dark) {
+                      _brightness = Brightness.light;
+                    } else {
+                      _brightness = Brightness.dark;
+                    }
+                  });
+                },
+                child: Text('切换主题abc',style: TextStyle(fontFamily: 'RubikMonoOne'),),
+              ),
+              RouteNavigator()
+            ],
+          ),
+        ),
+        routes: <String, WidgetBuilder>{
+          'less': (BuildContext context) => LessGroupPage(),
+          'stateful': (BuildContext context) => StatefulGroupPage(),
+          'flutterlayout': (BuildContext context) => FlutterLayoutPage(),
+          'widgetlifecycle': (BuildContext context) => WidgetLifeCyclePage(),
+          'plugin': (BuildContext context) => PubLearning(),
+          'getsture': (BuildContext context) => GetSturePage(),
+        });
+  }
+}
+
+class RouteNavigator extends StatefulWidget {
+  @override
+  _RouteNavigatorState createState() => _RouteNavigatorState();
+}
+
+class _RouteNavigatorState extends State<RouteNavigator> {
+  bool byName = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Column(
+        children: <Widget>[
+          SwitchListTile(
+              title: Text('${byName ? '' : '不'}通过路由名跳转'),
+              value: byName,
+              onChanged: (value) {
+                setState(() {
+                  byName = value;
+                });
+              }),
+          _buttonItem("StateLessWidget基础组件", LessGroupPage(), "less"),
+          _buttonItem("StateFulWidget基础组件", StatefulGroupPage(), "stateful"),
+          _buttonItem("Flutter布局DEMO", FlutterLayoutPage(), "flutterlayout"),
+          _buttonItem("Flutter Widget生命周期", WidgetLifeCyclePage(), "widgetlifecycle"),
+          _buttonItem("Flutter插件引用DEMO", PubLearning(), "plugin"),
+          _buttonItem("手势操作DEMO", GetSturePage(), "getsture"),
+        ],
+      ),
+    );
+  }
+
+  _buttonItem(String title, page, String routeName) {
+    return Container(
+      child: RaisedButton(
+        onPressed: () {
+          if (byName) {
+            Navigator.pushNamed(context, routeName);
+          } else {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => page));
+          }
+        },
+        child: Text(title),
+      ),
+    );
+  }
+}
+
