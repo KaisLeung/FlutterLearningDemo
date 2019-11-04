@@ -6,14 +6,17 @@ import 'package:flutter_app/flutter/widget/learning/less_group_page.dart';
 import 'package:flutter_app/flutter/widget/learning/stateful_group_page.dart';
 
 import 'flutter/widget/learning/app_lifecycle.dart';
+import 'flutter/widget/learning/async_task_page.dart';
 import 'flutter/widget/learning/flutter_widget_lifecycle.dart';
 import 'flutter/widget/learning/getsture_page.dart';
 import 'flutter/widget/learning/hero_animation_page.dart';
 import 'flutter/widget/learning/hero_animation_page_2.dart';
+import 'flutter/widget/learning/http_learning_page.dart';
 import 'flutter/widget/learning/image_page.dart';
 import 'flutter/widget/learning/launch_page.dart';
 import 'flutter/widget/learning/photo_page.dart';
 import 'flutter/widget/learning/pub_learning.dart';
+import 'flutter/widget/learning/shared_preferences_page.dart';
 
 void main() => runApp(MainPage());
 
@@ -96,6 +99,9 @@ class _MainPageState extends State<MainPage> {
         'hero': (BuildContext context) => HeroAnimationPage(),
         'hero2': (BuildContext context) => HeroRadialExpansionDemoPage(),
         'openUrl': (BuildContext context) => LaunchPage(),
+        'asyncTask': (BuildContext context) => AsyncTaskPage(),
+        'http': (BuildContext context) => HttpLearningPage(),
+        'spdemo': (BuildContext context) => SharedpreferencesLearningPage(),
         'pickphoto': (BuildContext context) => PhotoPage(),
       },
     );
@@ -145,6 +151,9 @@ class _RouteNavigatePageState extends State<RouteNavigatePage> {
           _buttonItem("动画演示DEMO", AnimationLearningPage(), "animation"),
           _buttonItem("Hero动画演示DEMO", HeroAnimationPage(), "hero"),
           _buttonItem("Hero动画演示DEMO-2", HeroRadialExpansionDemoPage(), "hero2"),
+          _buttonItem("异步任务Demo", AsyncTaskPage(), "asyncTask"),
+          _buttonItem("Http网络请求", HttpLearningPage(), "http"),
+          _buttonItem("SP缓存本地数据", SharedpreferencesLearningPage(), "spdemo"),
           _buttonItem("打开第三方应用DEMO", LaunchPage(), "openUrl"),
           _buttonItem("相机、相册DEMO", PhotoPage(), "pickphoto"),
         ],
